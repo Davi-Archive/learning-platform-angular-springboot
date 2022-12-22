@@ -1,6 +1,8 @@
 package io.davi.platform.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +15,9 @@ public class Course {
     private String imgUri;
     private String imgGrayUri;
 
+    @OneToMany(mappedBy = "course")
+    private List<Offer> offers = new ArrayList<>();
+
     public Course() {
     }
 
@@ -21,6 +26,10 @@ public class Course {
         this.name = name;
         this.imgUri = imgUri;
         this.imgGrayUri = imgGrayUri;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
     }
 
     public Long getId() {
