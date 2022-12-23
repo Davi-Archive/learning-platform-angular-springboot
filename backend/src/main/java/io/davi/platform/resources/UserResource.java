@@ -1,4 +1,4 @@
-package resources;
+package io.davi.platform.resources;
 
 import io.davi.platform.dto.UserDTO;
 import io.davi.platform.services.UserService;
