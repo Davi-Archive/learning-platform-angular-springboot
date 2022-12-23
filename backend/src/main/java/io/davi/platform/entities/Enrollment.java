@@ -4,8 +4,7 @@ import io.davi.platform.entities.pk.EnrollmentPK;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_enrollment")
@@ -22,6 +21,10 @@ public class Enrollment {
 
     @ManyToMany(mappedBy = "enrollmentsDone")
     private Set<Lesson> lessonsDone = new HashSet<>();
+
+    @OneToMany(mappedBy = "enrollment")
+    private List<Deliver> deliveries = new ArrayList<>();
+
     public Enrollment() {
     }
 
@@ -32,6 +35,26 @@ public class Enrollment {
         this.refundMoment = refundMoment;
         this.available = available;
         this.onlyUpdate = onlyUpdate;
+    }
+
+    public Set<Lesson> getLessonsDone() {
+        return lessonsDone;
+    }
+
+    public List<Deliver> getDeliveries() {
+        return deliveries;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Enrollment that)) return false;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public User getStudent() {
