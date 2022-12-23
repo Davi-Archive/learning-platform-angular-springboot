@@ -7,50 +7,72 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 public class EnrollmentPK implements Serializable {
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    @ManyToOne
-    @JoinColumn(name = "offer_id")
-    private Offer offer;
+	private static final long serialVersionUID = 1L;
 
-    public EnrollmentPK() {
-    }
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-    public EnrollmentPK(User user, Offer offer) {
-        this.user = user;
-        this.offer = offer;
-    }
+	@ManyToOne
+	@JoinColumn(name = "offer_id")
+	private Offer offer;
+	
+	public EnrollmentPK() {
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public EnrollmentPK(User user, Offer offer) {
+		super();
+		this.user = user;
+		this.offer = offer;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public Offer getOffer() {
-        return offer;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
-    }
+	public Offer getOffer() {
+		return offer;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EnrollmentPK that)) return false;
-        return user.equals(that.user) && offer.equals(that.offer);
-    }
+	public void setOffer(Offer offer) {
+		this.offer = offer;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(user, offer);
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((offer == null) ? 0 : offer.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnrollmentPK other = (EnrollmentPK) obj;
+		if (offer == null) {
+			if (other.offer != null)
+				return false;
+		} else if (!offer.equals(other.offer))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
 }

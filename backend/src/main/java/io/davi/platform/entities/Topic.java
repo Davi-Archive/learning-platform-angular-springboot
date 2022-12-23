@@ -1,6 +1,6 @@
 package io.davi.platform.entities;
 
-
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -8,168 +8,153 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 @Entity
 @Table(name = "tb_topic")
 public class Topic implements Serializable {
-    private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String title;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String title;
+	@Column(columnDefinition = "TEXT")
+	private String body;
+	
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant moment;
+	
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private User author;
+	
+	@ManyToOne
+	@JoinColumn(name = "offer_id")
+	private Offer offer;
+	
+	@ManyToOne
+	@JoinColumn(name = "lesson_id")
+	private Lesson lesson;
+	
+	@ManyToOne
+	@JoinColumn(name = "reply_id")
+	private Reply answer;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_topic_likes",
+		joinColumns = @JoinColumn(name = "topic_id"),
+		inverseJoinColumns = @JoinColumn(name = "user_id"))	
+	private Set<User> likes = new HashSet<>();
+	
+	@OneToMany(mappedBy = "topic")
+	private List<Reply> replies = new ArrayList<>();
+	
+	public Topic() {
+	}
 
-    @Column(columnDefinition = "TEXT")
-    private String body;
+	public Topic(Long id, String title, String body, Instant moment, User author, Offer offer, Lesson lesson) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.body = body;
+		this.moment = moment;
+		this.author = author;
+		this.offer = offer;
+		this.lesson = lesson;
+	}
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant moment;
+	public Long getId() {
+		return id;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private User author;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "offer_id")
-    private Offer offer;
+	public String getTitle() {
+		return title;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "reply_id")
-    private Reply answer;
+	public String getBody() {
+		return body;
+	}
 
-    @ManyToMany
-    @JoinTable(name = "tb_topic_likes",
-            joinColumns = @JoinColumn(name = "topic_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> likes = new HashSet<>();
+	public void setBody(String body) {
+		this.body = body;
+	}
 
-    @OneToMany(mappedBy = "topic")
-    private List<Reply> replies = new ArrayList<>();
+	public Instant getMoment() {
+		return moment;
+	}
 
-    public Topic() {
-    }
+	public void setMoment(Instant moment) {
+		this.moment = moment;
+	}
 
-    public Topic(Long id, String title, String body, Instant moment, User author, Offer offer, Lesson lesson) {
-        super();
-        this.id = id;
-        this.title = title;
-        this.body = body;
-        this.moment = moment;
-        this.author = author;
-        this.offer = offer;
-        this.lesson = lesson;
-    }
+	public User getAuthor() {
+		return author;
+	}
 
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Offer getOffer() {
+		return offer;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setOffer(Offer offer) {
+		this.offer = offer;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public Lesson getLesson() {
+		return lesson;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setLesson(Lesson lesson) {
+		this.lesson = lesson;
+	}
 
-    public String getBody() {
-        return body;
-    }
+	public Set<User> getLikes() {
+		return likes;
+	}
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+	public Reply getAnswer() {
+		return answer;
+	}
 
-    public Instant getMoment() {
-        return moment;
-    }
+	public void setAnswer(Reply answer) {
+		this.answer = answer;
+	}
 
-    public void setMoment(Instant moment) {
-        this.moment = moment;
-    }
+	public List<Reply> getReplies() {
+		return replies;
+	}
 
-    public User getAuthor() {
-        return author;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public Offer getOffer() {
-        return offer;
-    }
-
-    public void setOffer(Offer offer) {
-        this.offer = offer;
-    }
-
-    public Lesson getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
-    }
-
-    public Set<User> getLikes() {
-        return likes;
-    }
-
-    public Reply getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(Reply answer) {
-        this.answer = answer;
-    }
-
-    public List<Reply> getReplies() {
-        return replies;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Topic other = (Topic) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Topic other = (Topic) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 }

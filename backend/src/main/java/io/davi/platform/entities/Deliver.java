@@ -2,139 +2,148 @@ package io.davi.platform.entities;
 
 import io.davi.platform.entities.enums.DeliverStatus;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "tb_deliver")
 public class Deliver implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String uri;
+	
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant moment;
+	
+	private DeliverStatus status;
+	private String feedback;
+	private Integer correctCount;
+	
+	@ManyToOne
+	@JoinColumns({  
+		@JoinColumn(name = "offer_id"), 
+		@JoinColumn(name = "user_id") 
+	})
+	private Enrollment enrollment;
+	
+	@ManyToOne
+	@JoinColumn(name = "lesson_id")
+	private Lesson lesson;
+	
+	public Deliver() {
+	}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String uri;
+	public Deliver(Long id, String uri, Instant moment, DeliverStatus status, String feedback, Integer correctCount,
+			Enrollment enrollment, Lesson lesson) {
+		super();
+		this.id = id;
+		this.uri = uri;
+		this.moment = moment;
+		this.status = status;
+		this.feedback = feedback;
+		this.correctCount = correctCount;
+		this.enrollment = enrollment;
+		this.lesson = lesson;
+	}
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant moment;
+	public Long getId() {
+		return id;
+	}
 
-    private DeliverStatus status;
-    private String feedback;
-    private Integer correctCount;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "offer_id"),
-            @JoinColumn(name = "user_id")
-    })
-    private Enrollment enrollment;
+	public String getUri() {
+		return uri;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
 
-    public Deliver() {
-    }
+	public Instant getMoment() {
+		return moment;
+	}
 
-    public Deliver(Long id, String uri, Instant moment, DeliverStatus status, String feedback, Integer correctCount,
-                   Enrollment enrollment, Lesson lesson) {
-        super();
-        this.id = id;
-        this.uri = uri;
-        this.moment = moment;
-        this.status = status;
-        this.feedback = feedback;
-        this.correctCount = correctCount;
-        this.enrollment = enrollment;
-        this.lesson = lesson;
-    }
+	public void setMoment(Instant moment) {
+		this.moment = moment;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public DeliverStatus getStatus() {
+		return status;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setStatus(DeliverStatus status) {
+		this.status = status;
+	}
 
-    public String getUri() {
-        return uri;
-    }
+	public String getFeedback() {
+		return feedback;
+	}
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
 
-    public Instant getMoment() {
-        return moment;
-    }
+	public Integer getCorrectCount() {
+		return correctCount;
+	}
 
-    public void setMoment(Instant moment) {
-        this.moment = moment;
-    }
+	public void setCorrectCount(Integer correctCount) {
+		this.correctCount = correctCount;
+	}
 
-    public DeliverStatus getStatus() {
-        return status;
-    }
+	public Enrollment getEnrollment() {
+		return enrollment;
+	}
 
-    public void setStatus(DeliverStatus status) {
-        this.status = status;
-    }
+	public void setEnrollment(Enrollment enrollment) {
+		this.enrollment = enrollment;
+	}
 
-    public String getFeedback() {
-        return feedback;
-    }
+	public Lesson getLesson() {
+		return lesson;
+	}
 
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
+	public void setLesson(Lesson lesson) {
+		this.lesson = lesson;
+	}
 
-    public Integer getCorrectCount() {
-        return correctCount;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
-    public void setCorrectCount(Integer correctCount) {
-        this.correctCount = correctCount;
-    }
-
-    public Enrollment getEnrollment() {
-        return enrollment;
-    }
-
-    public void setEnrollment(Enrollment enrollment) {
-        this.enrollment = enrollment;
-    }
-
-    public Lesson getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Deliver other = (Deliver) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Deliver other = (Deliver) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 }

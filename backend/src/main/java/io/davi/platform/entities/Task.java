@@ -1,73 +1,72 @@
 package io.davi.platform.entities;
 
+import java.time.Instant;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.Instant;
 
 @Entity
 @Table(name = "tb_task")
 public class Task extends Lesson {
+	private String description;
+	private Integer questionCount;
+	private Integer approvalCount;
+	private Double weight;
+	
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")	
+	private Instant dueDate;
+	
+	public Task() {
+	}
 
-    private String description;
-    private Integer questionCount;
-    private Integer approvalCount;
-    private Double weight;
+	public Task(Long id, String title, Integer position, Section section, String description, Integer questionCount,
+			Integer approvalCount, Double weight, Instant dueDate) {
+		super(id, title, position, section);
+		this.description = description;
+		this.questionCount = questionCount;
+		this.approvalCount = approvalCount;
+		this.weight = weight;
+		this.dueDate = dueDate;
+	}
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant dueDate;
+	public String getDescription() {
+		return description;
+	}
 
-    public Task() {
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public Task(Long id, String title, Integer position,
-                Section section, String description, Integer questionCount,
-                Integer approvalCount, Double weight, Instant dueDate) {
-        super(id, title, position, section);
-        this.description = description;
-        this.questionCount = questionCount;
-        this.approvalCount = approvalCount;
-        this.weight = weight;
-        this.dueDate = dueDate;
-    }
+	public Integer getQuestionCount() {
+		return questionCount;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setQuestionCount(Integer questionCount) {
+		this.questionCount = questionCount;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public Integer getApprovalCount() {
+		return approvalCount;
+	}
 
-    public Integer getQuestionCount() {
-        return questionCount;
-    }
+	public void setApprovalCount(Integer approvalCount) {
+		this.approvalCount = approvalCount;
+	}
 
-    public void setQuestionCount(Integer questionCount) {
-        this.questionCount = questionCount;
-    }
+	public Double getWeight() {
+		return weight;
+	}
 
-    public Integer getApprovalCount() {
-        return approvalCount;
-    }
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
 
-    public void setApprovalCount(Integer approvalCount) {
-        this.approvalCount = approvalCount;
-    }
+	public Instant getDueDate() {
+		return dueDate;
+	}
 
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public Instant getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(Instant dueDate) {
-        this.dueDate = dueDate;
-    }
+	public void setDueDate(Instant dueDate) {
+		this.dueDate = dueDate;
+	}
 }
