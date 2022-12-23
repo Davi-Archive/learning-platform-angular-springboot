@@ -1,4 +1,4 @@
-package repositories;
+package io.davi.platform.repositories;
 
 import io.davi.platform.entities.Enrollment;
 import io.davi.platform.entities.pk.EnrollmentPK;
