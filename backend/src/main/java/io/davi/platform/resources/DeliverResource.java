@@ -1,7 +1,6 @@
 package io.davi.platform.resources;
 
 import io.davi.platform.dto.DeliverResivionDTO;
-import io.davi.platform.entities.Deliver;
 import io.davi.platform.services.DeliverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
